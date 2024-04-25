@@ -1,23 +1,51 @@
 import React from "react";
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 
-const parent = React.createElement("div", { id: "parent" }, [
-  React.createElement("div", { id: "child1" }, [
-    React.createElement("h1", {}, "I'm h1 tag"),
-    React.createElement("h2", {}, "I'm h2 tag"),
-  ]),
-  React.createElement("div", { id: "child2" }, [
-    React.createElement("h1", {}, "I'm h1 tag"),
-    React.createElement("h2", {}, "I'm h2 tag"),
-  ]),
-]);
+// React.createElement => object => (render) => HTMLElement
+// const heading = React.createElement("h1", { id: "heading" }, "Namaste React ");
 
-// const heading = React.createElement(
-//   "h1",
-//   { id: "heading" },
-//   "Hello World from React !"
+// jsx element
+// const title = (
+//   <h1 id="heading" className="head">Namaste React from jsx element</h1>
 // );
 
+const TitleComponent = () => (
+  <h1 id="heading" className="head">Namaste React from jsx</h1>
+);
+
+
+// const HeadingComponentNormal = function () {
+//   return (
+//   <div id="container">
+//     <TitleComponent />
+//     <h1> Namaste React Funtional Component </h1>
+//   </div>
+// )
+// };
+
+//passing jsx component into component i.e Component composition
+const HeadingComponent = () => (
+    <div id="container">
+      <TitleComponent />
+      {TitleComponent()}
+      <h1> Namaste React Funtional Component </h1>
+    </div>
+  );
+
+// passing jsx element
+// const HeadingComponent = () => (
+//     <div id="container">
+//       {title}
+//       <h1> Namaste React Funtional Component </h1>
+//     </div>
+//   );
+
+const HeadingComponent2 = () => <h1> Namaste React Funtional Component </h1>
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 // root.render(heading);
-root.render(parent);
+// root.render(jsxHeading);
+root.render(<HeadingComponent />);
+
+
