@@ -32,16 +32,19 @@
     border: 1px solid black;
     cursor: pointer;
     width: 250px;
-    height: 500px
 }
 
 .res-card {
     width: 200px;
     padding: 5px;
     margin: 10px;
-    height: 400px;
 }
 
 .res-logo {
     width: 100%;
+}
+
+.filter-btn {
+    cursor: pointer;
+    margin: 20px;
 }
