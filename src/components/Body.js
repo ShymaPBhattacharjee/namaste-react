@@ -1,64 +1,85 @@
 import ResturantCard from "./ResturantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
-  // normal js variable
-  // let listOfResturants = [
-  //   {
-  //     info: {
-  //       id: "112767",
-  //       name: "Tea Junction",
-  //       cloudinaryImageId: "77d2fffe27cd59af5045a102d08af522",
-  //       costForTwo: "₹150 for two",
-  //       cuisines: ["Beverages", "Snacks", "Desserts"],
-  //       avgRating: 4.5,
-  //       sla: {
-  //         deliveryTime: 29,
-  //       },
-  //     },
-  //   },
-  //   {
-  //     info: {
-  //       id: "112768",
-  //       name: "Dominos",
-  //       cloudinaryImageId: "77d2fffe27cd59af5045a102d08af522",
-  //       costForTwo: "₹150 for two",
-  //       cuisines: ["Beverages", "Snacks", "Desserts"],
-  //       avgRating: 3.8,
-  //       sla: {
-  //         deliveryTime: 36,
-  //       },
-  //     },
-  //   },
-  // ];
-
   // stateful variable
-  let [listOfResturants, setListOfResturants] = useState(resList);
+  let [listOfResturants, setListOfResturants] = useState([]);
+  let [filteredListOfResturants, setFilteredListOfResturants] = useState([]);
 
-  // Or 
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.51800&lng=88.38320&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+
+    const json = await data.json();
+
+    // optional chaining
+    setListOfResturants(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredListOfResturants(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
+
+  // Or
   // const arr = useState(resList);
   // const listOfResturants = arr[0];
   // const setListOfResturants = arr[1];
-  
-  return (
+  // if (listOfResturants.length === 0) {
+  //   return <Shimmer />;
+  // }
+  return listOfResturants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(event) => {
+              setSearchText(event.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              const filteredListOfResturants = listOfResturants.filter(
+                (res) => {
+                  return res.info.name
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase());
+                }
+              );
+              setFilteredListOfResturants(filteredListOfResturants);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
-            filteredListOfResturants = listOfResturants.filter(
+            const filteredList = listOfResturants.filter(
               (res) => res.info.avgRating > 4
             );
-            console.log(filteredListOfResturants);
-            setListOfResturants(filteredListOfResturants);
+            console.log(filteredList);
+            setListOfResturants(filteredList);
           }}
         >
           Top rated resturant
         </button>
       </div>
       <div className="res-container">
-        {listOfResturants.map((resturant) => (
+        {filteredListOfResturants?.map((resturant) => (
           <ResturantCard key={resturant.info.id} resData={resturant} />
         ))}
       </div>
