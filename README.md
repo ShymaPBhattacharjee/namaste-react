@@ -29,3 +29,68 @@ A function starts with use is a hook in react.
 - Clent side routing : React uses this.
 - Server side rendering :L Older website used this.
 
+# Why we use componentDidMount :
+----------------------------------
+- We use this lifecycle hook for API call in class based component.
+
+# Why we do API call in componentDidMount lifecycle hook in Class based component :
+-----------------------------------------------------------------------------------
+- Because in react, we first load the component and then make the API call for faster performance. 
+
+# Where we do API call in Functional component :
+------------------------------------------------
+- In the useEffect hook.
+
+# React life-cycle diagram :
+-----------------------------
+- https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+** await fetch(
+      "https://api.github.com/users/ShymaPBhattacharjee"
+    );
+
+    Always return a promise.
+
+# Lifecycle hooks steps :
+--------------------------
+ Mounting Phase
+
+    - Parent Constructor
+    - Parent render
+        - First Constructor
+        - First render
+
+        - Second Constructor
+        - Second render
+
+        < dom UPDATED - IN A SINGLE BATCH >
+        - First componentDidMount
+        - second componentDidMount
+    - Parent componentDidMount
+
+ Updating phase
+
+    # Mounting cyclle
+    *******************
+
+    - constructor ( default value of state variable )
+    - render( dummy data/ initial values of state variable )
+        < HTML(dummy) >
+    - componentDidMount
+        <API call>
+        <this.setState> - state variable with new data
+
+    # Updating cycle
+    ******************
+
+    -render( API data )
+        <HTML - new API data>
+    - componentDidUpdate
+
+    # unMounting : means removing from the HTML
+    *************
+    - componentWillUnmount
+
+    
+** LifeCycle hooks are not in functional components. 
+ - useEffect hook is not equivalent to componentDidMount
