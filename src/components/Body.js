@@ -2,6 +2,7 @@ import ResturantCard from "./ResturantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   // stateful variable
@@ -9,6 +10,8 @@ const Body = () => {
   let [filteredListOfResturants, setFilteredListOfResturants] = useState([]);
 
   const [searchText, setSearchText] = useState("");
+
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
     fetchData();
@@ -37,6 +40,9 @@ const Body = () => {
   // if (listOfResturants.length === 0) {
   //   return <Shimmer />;
   // }
+  if(onlineStatus === false) {
+    return <h1> Look's like you are offline!! Please check your internet connection. </h1>
+  }
   return listOfResturants.length === 0 ? (
     <Shimmer />
   ) : (
@@ -81,7 +87,7 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredListOfResturants?.map((resturant) => (
-          <Link key={resturant.info.id} to={"/restaurants/"+resturant.info.id}><ResturantCard resData={resturant} /></Link>
+          <Link key={resturant.info.id} to={"/restaurants/"+resturant.info.id} className="res-link-style"><ResturantCard resData={resturant} /></Link>
         ))}
       </div>
     </div>
