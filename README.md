@@ -94,3 +94,21 @@ A function starts with use is a hook in react.
     
 ** LifeCycle hooks are not in functional components. 
  - useEffect hook is not equivalent to componentDidMount
+
+HW : styled component, bootstrap, scss, sass, MIUI, chakra ui
+
+TAILWIND CSS :
+---------------
+ - Rapidly build modern websites without ever leaving your HTML.
+ - POST CSS : -> A tool for transforming CSS with javascript.
+    - PostCSS Preset Env, lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using css.
+ - Pros :
+ ...............
+
+    - development process is very fast.
+    - It is very lightweight i.e when parcel will bundle our css, it will only include the css which is required on our web-page.
+ - Cons : 
+ .............
+ 
+    - lots of classes will come. So, our code will become ugly.
+    - some initial learning curve.
